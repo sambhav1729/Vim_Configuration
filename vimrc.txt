@@ -1,0 +1,13 @@
+set number
+set relativenumber
+set numberwidth=2
+set cpoptions+=n
+syntax on
+filetype on
+filetype indent on
+set smartindent
+autocmd BufRead,BufWritePre *.sh normal gg=G
+set autoindent
+set softtabstop=4
+set expandtab
+set tabstop=4
