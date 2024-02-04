@@ -2,8 +2,8 @@
 # Vim_Configuration
 ***Contains customised .vimrc file***
 # Plugins
-1. ***number_line***
-1. ***relative_number_line***
-1. ***syntax_highlight***
-1. ***smart_indent***
-1. ***filetype_indent***
+1. ***nerdtree***
+1. ***vim-airline***
+1. ***vim-polygot***
+1. ***emmet-vim***
+1. ***fzf***
