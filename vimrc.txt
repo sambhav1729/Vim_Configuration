@@ -30,6 +30,9 @@ set wildmenu
 set wildmode=list:longest
 let g:airline_theme='simple'
 let g:airline#extensions#tabline#formatter = 'default'
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_imaps_enabled = 0
+let g:vimtex_quickfix_open_on_warning = 0
 "let g:NERDTreeFileLines = 1
 " Start NERDTree and leave the cursor in it.
 autocmd VimEnter * NERDTree
@@ -46,6 +49,7 @@ call plug#begin('~/.vim/plugged')
    Plug 'mattn/emmet-vim'
    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
    Plug 'junegunn/fzf.vim'
+   Plug 'lervag/vimtex'
    
 call plug#end()
 " }}}
@@ -144,6 +148,30 @@ if has('gui_running')
         \endif<CR>
 
 endif
+
+" Return focus to Vim after forward search
+
+" Get Vim's window ID for switching focus from Zathura to Vim using xdotool.
+" Only set this variable once for the current Vim instance.
+if !exists("g:vim_window_id")
+  let g:vim_window_id = system("xdotool getactivewindow")
+endif
+
+function! s:TexFocusVim() abort
+  " Give window manager time to recognize focus moved to Zathura;
+  " tweak the 200m (200 ms) as needed for your hardware and window manager.
+  sleep 200m  
+
+  " Refocus Vim and redraw the screen
+  silent execute "!xdotool windowfocus " . expand(g:vim_window_id)
+  redraw!
+endfunction
+
+augroup vimtex_event_focus
+  au!
+  au User VimtexEventView call s:TexFocusVim()
+augroup END
+
 " }}}
 
 " STATUS LINE ------------------------------------------------------------ {{{
